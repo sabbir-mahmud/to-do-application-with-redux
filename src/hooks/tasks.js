@@ -6,15 +6,27 @@ export const taskApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://glacial-lowlands-92255.herokuapp.com'
   }),
-
+  tagTypes: ['tasks'],
   endpoints: (builder) => ({
     getAllTask: builder.query({
       query: () => ({
         url: `api/tasks`,
         method: 'GET'
       }),
+      providesTags: ['tasks']
     }),
+    createTask: builder.mutation({
+      query: (data) => ({
+        url: `api/tasks`,
+        method: 'POST',
+        body: data,
+        headers: {
+          'content-type': `application/json`
+        }
+      }),
+      invalidatesTags: ['tasks']
+    })
   }),
 });
 
-export const { useGetAllTaskQuery } = taskApi;
+export const { useGetAllTaskQuery, useCreateTaskMutation } = taskApi;
