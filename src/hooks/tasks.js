@@ -15,6 +15,13 @@ export const taskApi = createApi({
       }),
       providesTags: ['tasks']
     }),
+    getTask: builder.query({
+      query: (id) => ({
+        url: `api/tasks/${id}`,
+        method: 'GET'
+      })
+    })
+    ,
     createTask: builder.mutation({
       query: (data) => ({
         url: `api/tasks`,
@@ -47,4 +54,4 @@ export const taskApi = createApi({
   }),
 });
 
-export const { useGetAllTaskQuery, useCreateTaskMutation, useCompleteTaskMutation } = taskApi;
+export const { useGetAllTaskQuery, useGetTaskQuery, useCreateTaskMutation, useCompleteTaskMutation } = taskApi;
