@@ -1,9 +1,8 @@
 import React from 'react';
-import { useCreateTaskMutation, useGetAllTaskQuery } from '../hooks/tasks';
+import { useCreateTaskMutation } from '../hooks/tasks';
 
 const CreateTask = () => {
  const [createTask, responseInfo] = useCreateTaskMutation()
- const { refetch } = useGetAllTaskQuery()
  console.log(responseInfo);
  const submitForm = async (e) => {
   e.preventDefault()
