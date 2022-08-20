@@ -1,10 +1,12 @@
 // imports
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+const url = process.env.REACT_APP_TO_DO_BASE_URL
+console.log(url);
 
 export const taskApi = createApi({
   reducerPath: 'taskApi',
   baseQuery: fetchBaseQuery({
-    baseUrl: 'https://glacial-lowlands-92255.herokuapp.com'
+    baseUrl: `${url}`
   }),
   tagTypes: ['tasks'],
   endpoints: (builder) => ({
@@ -19,7 +21,8 @@ export const taskApi = createApi({
       query: (id) => ({
         url: `api/tasks/${id}`,
         method: 'GET'
-      })
+      }),
+      providesTags: ['tasks']
     })
     ,
     createTask: builder.mutation({
@@ -41,17 +44,28 @@ export const taskApi = createApi({
       invalidatesTags: ['tasks']
     }),
     updateTask: builder.mutation({
-      query: (id, data) => ({
+      query: ({ id, data }) => ({
         url: `api/tasks/${id}`,
         method: 'PUT',
         body: data,
         headers: {
           'content-type': 'application/json'
         }
-      })
+      }),
+      invalidatesTags: ['tasks']
+    }),
+    deleteTask: builder.mutation({
+      query: (id) => ({
+        url: `api/tasks/${id}`,
+        method: 'DELETE',
+        headers: {
+          'content-type': 'application/json'
+        }
+      }),
+      invalidatesTags: ['tasks']
     })
 
   }),
 });
 
-export const { useGetAllTaskQuery, useGetTaskQuery, useCreateTaskMutation, useCompleteTaskMutation } = taskApi;
+export const { useGetAllTaskQuery, useGetTaskQuery, useCreateTaskMutation, useCompleteTaskMutation, useUpdateTaskMutation, useDeleteTaskMutation } = taskApi;

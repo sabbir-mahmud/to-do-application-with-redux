@@ -3,7 +3,7 @@ import { useCreateTaskMutation } from '../hooks/tasks';
 
 const CreateTask = () => {
  const [createTask, responseInfo] = useCreateTaskMutation()
- console.log(responseInfo);
+
  const submitForm = async (e) => {
   e.preventDefault()
   const name = e.target.taskName.value;
